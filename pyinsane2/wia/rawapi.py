@@ -216,8 +216,9 @@ def _start_scan(src, out):
     )
     if ret is None:  # Brother MFC-7360N
         raise StopIteration()
-    if not ret:
-        raise WIAException("Failed to scan")
+    # WORKAROUND(Jflesch): Samsung SCX-3400: after successfully
+    # scanning the page, download() returns an error ...
+    # Let's just ignore it.
     return ret
 
 
