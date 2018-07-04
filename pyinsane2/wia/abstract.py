@@ -104,7 +104,9 @@ class Scan(object):
         if self._img_size is None:
             try:
                 self._get_current_image()
-            except:
+            except Exception as exc:
+                logger.warning("Exception while getting current image",
+                               exc_info=exc)
                 # assumes we just got truncated headers for now
                 return (0, 0)
         # estimated
@@ -227,8 +229,9 @@ class ScannerOption(object):
         self._value = new_value
         try:
             self.scanner.reload_options()
-        except:
-            pass
+        except Exception as exc:
+            logger.warning("Failed to reload option after updating value",
+                           exc_info=exc)
         if not has_success:
             raise exc
 
@@ -477,10 +480,10 @@ class Scanner(object):
                 logger.warning("Option '{}' preset to '{}' on [{}]".format(
                     opt, val, self
                 ))
-            except:
+            except Exception as exc:
                 logger.warning("Failed to pre-set option '{}' on [{}]".format(
                     opt, self
-                ))
+                ), exc_info=exc)
 
     @staticmethod
     def _convert_prop_list_to_dict(props):
@@ -615,8 +618,8 @@ class Scanner(object):
                 # This is not orthodox at all, but still, it has proven to be
                 # the most reliable way.
                 self.options['pages'].value = 1
-            except:
-                logger.exception("Failed to set options [pages]")
+            except Exception as exc:
+                logger.error("Failed to set options [pages]", exc_info=exc)
 
         return ScanSession(self, self.options['source'].value, multiple)
 

@@ -161,10 +161,10 @@ if __name__ == "__main__":
     formatter = logging.Formatter(
         '%(levelname)-6s %(name)-10s %(message)s'
     )
-    l = logging.getLogger()
+    log = logging.getLogger()
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
-    l.addHandler(handler)
-    l.setLevel(logging.INFO)
+    log.addHandler(handler)
+    log.setLevel(logging.INFO)
 
     main_loop(sys.argv[1], sys.argv[2:4])
