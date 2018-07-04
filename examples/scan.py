@@ -8,6 +8,9 @@ from PIL import Image
 import pyinsane2
 
 
+PROGRESSION_INDICATOR = ['|', '/', '-', '\\']
+
+
 def main():
     logger = logging.getLogger()
     sh = logging.StreamHandler()
@@ -89,7 +92,6 @@ def main():
         steps_filename = (".".join(sp[:-1]), sp[-1])
 
     try:
-        PROGRESSION_INDICATOR = ['|', '/', '-', '\\']
         i = -1
         while True:
             i += 1

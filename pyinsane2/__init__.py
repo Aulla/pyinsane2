@@ -32,7 +32,7 @@ __all__ = [
 __version__ = "2.0.10"
 
 
-def __normalize_value(value):
+def normalize_value(value):
     if isinstance(value, str):
         return value.lower()
     return value
@@ -73,7 +73,7 @@ def set_scanner_opt(scanner, opt, values):
         if isinstance(scanner.options[opt].constraint, list):
             found = False
             for possible in scanner.options[opt].constraint:
-                if __normalize_value(value) == __normalize_value(possible):
+                if normalize_value(value) == normalize_value(possible):
                     value = possible
                     found = True
                     break
@@ -82,8 +82,8 @@ def set_scanner_opt(scanner, opt, values):
                 # for instance, 'feeder' in 'Automatic Document Feeder'
                 for possible in scanner.options[opt].constraint:
                     if (isinstance(possible, str) and
-                            __normalize_value(value) in
-                            __normalize_value(possible)):
+                            normalize_value(value) in
+                            normalize_value(possible)):
                         logger.info(
                             "Value for [{}] changed from [{}] to [{}]".format(
                                 opt, value, possible
@@ -126,7 +126,7 @@ def set_scanner_opt(scanner, opt, values):
     raise last_exc
 
 
-def __set_scan_area_pos(options, opt_name, select_value_func, missing_options):
+def set_scan_area_pos(options, opt_name, select_value_func, missing_options):
     if opt_name not in options:
         if missing_options:
             missing_options.append(opt_name)
@@ -152,12 +152,12 @@ def maximize_scan_area(scanner):
     """
     opts = scanner.options
     missing_opts = []
-    __set_scan_area_pos(opts, "tl-x", min, missing_opts)
-    __set_scan_area_pos(opts, "tl-y", min, missing_opts)
-    __set_scan_area_pos(opts, "br-x", max, missing_opts)
-    __set_scan_area_pos(opts, "br-y", max, missing_opts)
-    __set_scan_area_pos(opts, "page-height", max, None)
-    __set_scan_area_pos(opts, "page-width", max, None)
+    set_scan_area_pos(opts, "tl-x", min, missing_opts)
+    set_scan_area_pos(opts, "tl-y", min, missing_opts)
+    set_scan_area_pos(opts, "br-x", max, missing_opts)
+    set_scan_area_pos(opts, "br-y", max, missing_opts)
+    set_scan_area_pos(opts, "page-height", max, None)
+    set_scan_area_pos(opts, "page-width", max, None)
     if missing_opts:
         logger.warning(
             "Failed to maximize the scan area. Missing options: {}".format(

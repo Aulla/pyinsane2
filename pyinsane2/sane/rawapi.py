@@ -409,14 +409,14 @@ class SaneParameters(ctypes.Structure):
     ]
 
 
-def __dummy_auth_callback(sane_ressource_str):
+def dummy_auth_callback(sane_ressource_str):
     return (
         "anonymous",  # login
         ""  # password
     )
 
 
-class __AuthCallbackWrapper(object):
+class AuthCallbackWrapper(object):
     MAX_USERNAME_LEN = 128
     MAX_PASSWORD_LEN = 128
 
@@ -520,7 +520,7 @@ def is_sane_available():
     return sane_available
 
 
-def sane_init(auth_callback=__dummy_auth_callback):
+def sane_init(auth_callback=dummy_auth_callback):
     global sane_available, sane_is_init, sane_version
     assert(sane_available)
 
@@ -529,7 +529,7 @@ def sane_init(auth_callback=__dummy_auth_callback):
         return sane_version
 
     version_code = ctypes.c_int()
-    wrap_func = __AuthCallbackWrapper(auth_callback).wrapper
+    wrap_func = AuthCallbackWrapper(auth_callback).wrapper
     auth_callback = AUTH_CALLBACK_DEF(wrap_func)
 
     status = SANE_LIB.sane_init(ctypes.pointer(version_code), auth_callback)
