@@ -167,6 +167,7 @@ class WiaCallbacks(object):
     def get_data_cb(self, nb_bytes):
         self.condition.acquire()
         try:
+            logger.debug("Got {} bytes from driver".format(nb_bytes))
             data = self.buffer[:nb_bytes]
             self.received.append(data)
             self.condition.notify_all()
@@ -176,9 +177,8 @@ class WiaCallbacks(object):
     def end_of_page_cb(self):
         self.condition.acquire()
         try:
-            self.received.append(
-                EOFError()
-            )
+            logger.debug("End of page from driver")
+            self.received.append(EOFError())
             self.condition.notify_all()
         finally:
             self.condition.release()
@@ -186,9 +186,8 @@ class WiaCallbacks(object):
     def end_of_scan_cb(self):
         self.condition.acquire()
         try:
-            self.received.append(
-                StopIteration()
-            )
+            logger.debug("End of scan from driver")
+            self.received.append(StopIteration())
             self.condition.notify_all()
         finally:
             self.condition.release()
@@ -215,6 +214,7 @@ def _start_scan(src, out):
         out.buffer,
     )
     if ret is None:  # Brother MFC-7360N
+        logger.debug("download() returned PAPER_EMPTY --> StopIteration")
         raise StopIteration()
     # WORKAROUND(Jflesch): Samsung SCX-3400: after successfully
     # scanning the page, download() returns an error ...

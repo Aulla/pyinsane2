@@ -220,8 +220,11 @@ HRESULT PyinsaneWiaTransferCallback::GetNextStream(
 
 HRESULT PyinsaneWiaTransferCallback::TransferCallback(LONG, WiaTransferParams *params)
 {
-    TRACE();
+    wia_log(WIA_DEBUG, "%s(): L%d: %ld, %ld%%, %lluB, 0x%X", __FUNCTION__, __LINE__,
+            params->lMessage, params->lPercentComplete, params->ulTransferredBytes,
+            params->hrErrorStatus);
     if (params->lMessage == WIA_TRANSFER_MSG_END_OF_TRANSFER) {
+        TRACE();
         mEop(mCbData); // mark the current page as finished
     }
     return S_OK;

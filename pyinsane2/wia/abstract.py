@@ -55,6 +55,8 @@ class Scan(object):
             if self.multiple:
                 return self._session._next().read()
             else:
+                logger.debug("Page is complete + single scan requested"
+                             " --> StopIteration")
                 raise StopIteration()
         try:
             buf = self.scan.read()
@@ -83,6 +85,8 @@ class Scan(object):
             else:
                 # --> Too small. Scrap the crap from the drivers and switch
                 # back to the last valid data obtained (last page scanned)
+                logger.warning("Got data, but too small for a BMP"
+                               " --> StopIteration")
                 self._session._cancel_current()
                 raise StopIteration()
 
