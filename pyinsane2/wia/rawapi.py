@@ -168,7 +168,7 @@ class WiaCallbacks(object):
         self.condition.acquire()
         try:
             logger.debug("Got {} bytes from driver".format(nb_bytes))
-            data = self.buffer[:nb_bytes]
+            data = list(self.buffer[:nb_bytes])
             self.received.append(data)
             self.condition.notify_all()
         finally:
