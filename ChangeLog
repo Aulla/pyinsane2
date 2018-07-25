@@ -1,7 +1,13 @@
-2018-xx-xx : 2.0.13:
+2018-07-25 : 2.0.13:
+- WIA: Support of Canon MG3051: Fix getting data from the drivers
+  (a Python byte buffer was reused instead of being duplicated)
+- WIA: Support of Epson Perfection scanners: Handle resolution range correctly
+  (3 values provided instead of 2)
 - Sane: Support of Epson DS-310: Do not try to set a value on an option that
   can have only one value. Sane driver may return an error.
-- WIA: Support of Epson WorkForce ES-300W
+- WIA: Support of Epson WorkForce ES-300W:
+  * call to seek(0) wasn't handled properly
+  * scan must be done on root WIAItem
 
 2018-03-05 : 2.0.12:
 - Build method has been changed: Use now "make install" instead of
