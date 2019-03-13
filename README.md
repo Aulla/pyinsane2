@@ -1,5 +1,12 @@
 # PyInsane 2
 
+
+## Unmaintained
+
+Pyinsane is not maintained anymore.
+It has been replaced by [Libinsane](https://gitlab.gnome.org/World/OpenPaperwork/libinsane#readme)
+
+
 ## Description
 
 Python library to access and use image scanners.
