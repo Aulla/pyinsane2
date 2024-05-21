@@ -67,6 +67,14 @@ def remote_do(command, *args, **kwargs):
     length = os.read(fifo_s2c, length_size)
     length = struct.unpack("i", length)[0]
     result = os.read(fifo_s2c, length)
+    
+    block = 64653
+    result = bytes()
+    while len(result) < length:
+        block_size = min(length - len(result), block)
+        block_result =  os.read(fifo_s2c, block_size)
+        result += block_result
+
     assert(len(result) == length)
     result = pickle.loads(result)
     if 'exception' in result:
