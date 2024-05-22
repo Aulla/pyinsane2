@@ -16,7 +16,7 @@ else:
 try:
     with open("pyinsane2/_version.py", "r") as file_descriptor:
         version = file_descriptor.read().strip()
-        version = version.split(" ")[2][1:-1]
+        version = version.split("=")[1][1:-1]
     print("Pyinsane version: {}".format(version))
     if "-" in version:
         version = version.split("-")[0]
