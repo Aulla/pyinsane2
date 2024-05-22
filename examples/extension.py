@@ -36,7 +36,7 @@ else:
 if not devices:
     raise Exception("No scanner found")
 
-print("Setting options ...")
+print("Setting options ...", pyinsane2.__file__)
 pyinsane2.set_scanner_opt(device, 'source', [source])
 pyinsane2.set_scanner_opt(device, 'resolution', [resolution])
 pyinsane2.set_scanner_opt(device, 'mode', [mode])
