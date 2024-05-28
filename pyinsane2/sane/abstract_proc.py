@@ -69,7 +69,6 @@ def remote_do(command, *args, **kwargs):
     result = os.read(fifo_s2c, length)
     
     block = 64653
-    result = bytes()
     while len(result) < length:
         block_size = min(length - len(result), block)
         block_result =  os.read(fifo_s2c, block_size)
@@ -122,7 +121,7 @@ def init():
         os.putenv('PYINSANE_DAEMON', '0')
         os.execlp(
             sys.executable, sys.executable,
-            "-m", "pyinsane2.sane.daemon",
+            "scanner", "sane_daemon",
             pipe_dirpath,
             pipe_path_c2s, pipe_path_s2c
         )
